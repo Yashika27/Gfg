@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+struct Node
+{
+    int data; Node *left; Node *right;
+    Node(int x)
+    {
+        data=x; left=right=NULL;
+    }
+};
+
+void inorder(Node *root)
+{
+    if(root==NULL)  return ;
+  
+    inorder(root->left);
+    cout<<root->data<<" "; 
+    inorder(root->right);
+   
+}
+Node *rec( int &u,int a[],int k,int n,int m1,int m2)
+{
+    if(u>=n)  return NULL;
+    Node *root=NULL;
+    if(k>m1 && k<m2)
+    {
+          root= new Node(k);
+           u++;     // this u is index of array that must be independent of recursion.
+          root->left = rec(u,a,a[u],n,m1,k);
+          root->right=rec(u,a,a[u],n,k,m2);
+        
+    }
+    return root;
+}
+int main()
+{
+   int n,i,j;   cin>>n;  int a[n];
+   for(i=0;i<n;i++)  cin>>a[i];
+   int u=0;
+   Node *root= rec(u,a,a[0],n,INT_MIN,INT_MAX);
+   inorder(root);
+}
